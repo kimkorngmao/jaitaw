@@ -1,0 +1,33 @@
+POST http://127.0.0.1:8000/comments/create/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+{
+  "content": "Wow Amazing", "post_code": "cXVp5Jm95Ig"
+}
+
+###
+GET http://127.0.0.1:8000/comments/read/<comment_id>/
+Content-Type: application/json
+
+###
+PUT  http://127.0.0.1:8000/comments/update/<comment_id>/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+{"content": "Wow Amazing!"}
+
+
+###
+POST  http://127.0.0.1:8000/comments/like/<comment_id>/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+###
+DELETE http://127.0.0.1:8000/comments/delete/<comment_id>/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+###
+GET  http://127.0.0.1:8000/comments/post/cXVp5Jm95Ig/
+Content-Type: application/json

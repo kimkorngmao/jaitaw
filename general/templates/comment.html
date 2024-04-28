@@ -1,0 +1,171 @@
+{% extends "base/base.html" %}
+
+{% block title %}Comments{% endblock title %}
+
+{% block body %}
+<h2 id="api-documentation-comments-management">Comments Application</h2>
+<p>This section describes the API endpoints for managing comments.</p>
+<p><strong>Base URL:</strong> http://127.0.0.1:8000/</p>
+<p><strong>Authentication:</strong></p>
+<p>Most API calls require authorization with a valid access token. You can obtain an access token by logging in with a username and password (refer to Accounts section).</p>
+<h3 id="create-comment">Create Comment</h3>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>Endpoint:</strong> /comments/create/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Request Body:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"content"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"post_code"</span>: <span class="hljs-string">"string"</span>  // The unique code of the post to comment on
+}
+</div></code></pre>
+<ul>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Created comment succesfully."</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Create a new comment on a post.</li>
+</ul>
+<h3 id="get-comment-by-id">Get Comment by ID</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoint:</strong> /comments/read/&lt;comment_id&gt;/</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;comment_id&gt;</code>: The unique identifier of the comment to retrieve.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  "comment": {
+    "id": integer,
+    "content": "string",
+    "created": "string (date-time)",
+    "updated": "string (date-time)",
+    "author": {
+      "full_name": "string",
+      "username": "string",
+      "bio": "null|string",
+      "profile_image": "null|string",
+      "following_count": integer,
+      "follower_count": integer,
+      "is_follow": boolean,
+      "is_verify": boolean
+    },
+    "like_count": integer,
+    "is_like": boolean
+  }
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get information about a specific comment by its unique ID.</li>
+</ul>
+<h3 id="update-comment">Update Comment</h3>
+<ul>
+<li><strong>Method:</strong> PUT</li>
+<li><strong>Endpoint:</strong> /comments/update/&lt;comment_id&gt;/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;comment_id&gt;</code>: The unique identifier of the comment to update.</li>
+</ul>
+</li>
+<li><strong>Request Body:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"content"</span>: <span class="hljs-string">"string"</span>  // The updated content of the comment
+}
+</div></code></pre>
+<ul>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"updated_comment"</span>: {
+    "comment": {
+      "id": integer,
+      "content": "string",
+      "created": "string (date-time)",
+      "updated": "string (date-time)",
+      "author": {
+        "full_name": "string",
+        "username": "string",
+        "bio": "null|string",
+        "profile_image": "null|string",
+        "following_count": integer,
+        "follower_count": integer,
+        "is_follow": boolean,
+        "is_verify": boolean
+      },
+      "like_count": integer,
+      "is_like": boolean
+    }
+  }
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Update the content of an existing comment.</li>
+</ul>
+<h3 id="delete-comment">Delete Comment</h3>
+<ul>
+<li><strong>Method:</strong> DELETE</li>
+<li><strong>Endpoint:</strong> /comments/delete/&lt;comment_id&gt;/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;comment_id&gt;</code>: The unique identifier of the comment to delete.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Comment deleted successfully!"</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Delete a comment.</li>
+</ul>
+<h3 id="like-comment">Like Comment</h3>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>Endpoint:</strong> /comments/like/&lt;comment_id&gt;/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;comment_id&gt;</code>: The unique identifier of the comment to like/unlike.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"You are now like/unlike &lt;comment_content&gt;."</span> (depending on action)
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Like or unlike a comment. Liking a comment increases the comment's like count.</li>
+</ul>
+<h3 id="get-comments-for-post">Get Comments for Post</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoint:</strong> /comments/post/&lt;post_code&gt;/</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;post_code&gt;</code>: The unique code of the post to retrieve comments for.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"comments"</span>: [
+    # List of comments for the specified post
+  ]
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get a list of comments for a specific post.</li>
+</ul>
+{% endblock body %}

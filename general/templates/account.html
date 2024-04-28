@@ -1,0 +1,203 @@
+{% extends "base/base.html" %}
+
+{% block title %}Accounts{% endblock title %}
+
+{% block body %}
+<h2 id="api-documentation-accounts-app">Accounts Application</h2>
+<p>This document describes the API endpoints for managing user accounts.</p>
+<p><strong>Base URL:</strong> http://127.0.0.1:8000/</p>
+<p><strong>Authentication:</strong></p>
+<p>Most API calls require authorization with a valid access token. You can obtain an access token by logging in with a username and password.</p>
+<h3 id="login">Login</h3>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>Endpoints:</strong> /accounts/login/</li>
+<li><strong>Request Body (JSON):</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"username"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"password"</span>: <span class="hljs-string">"string"</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"access_token"</span>: <span class="hljs-string">"string"</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Login to the application and get an access token for subsequent requests.</li>
+</ul>
+<h3 id="register">Register</h3>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>Endpoints:</strong> /accounts/register/</li>
+<li><strong>Request Body (JSON):</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"username"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"password"</span>: <span class="hljs-string">"string"</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"string"</span>,  // Success message
+  <span class="hljs-attr">"access_token"</span>: <span class="hljs-string">"string"</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Register a new user account.</li>
+</ul>
+<h3 id="get-current-user-info">Get Current User Info</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoints:</strong> /accounts/me/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"success"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"user"</span>: {
+    <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"string"</span>,
+    <span class="hljs-attr">"username"</span>: <span class="hljs-string">"string"</span>,
+    <span class="hljs-attr">"email"</span>: <span class="hljs-string">"string"</span>,
+    <span class="hljs-attr">"bio"</span>: <span class="hljs-literal">"null</span>|string",
+    <span class="hljs-attr">"profile_image"</span>: <span class="hljs-literal">"null</span>|string",
+    <span class="hljs-attr">"following_count"</span>: integer,
+    <span class="hljs-attr">"follower_count"</span>: integer,
+    <span class="hljs-attr">"is_follow"</span>: boolean,
+    <span class="hljs-attr">"is_verify"</span>: boolean
+  }
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get information about the currently logged-in user.</li>
+</ul>
+<h3 id="get-followers">Get Followers</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoints:</strong> /accounts/follower/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"success"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"followerUsers"</span>: [
+    # List of follower users account info.
+  ]
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get a list of users who follow the currently logged-in user.</li>
+</ul>
+<h3 id="get-following">Get Following</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoints:</strong> /accounts/following/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"success"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"followingUsers"</span>: [
+    {
+      # List of following users account info.
+    }
+  ]
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get a list of users who the currently logged-in user follows.</li>
+</ul>
+<h3 id="get-user-info-by-username">Get User Info by Username</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoints:</strong> /accounts/&lt;username&gt;/</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;username&gt;</code>: The username of the user to retrieve information about.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"success"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"user"</span>: {
+    <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"string"</span>,
+    <span class="hljs-attr">"username"</span>: <span class="hljs-string">"string"</span>,
+    <span class="hljs-attr">"bio"</span>: <span class="hljs-literal">"null</span>|string",
+    <span class="hljs-attr">"profile_image"</span>: <span class="hljs-literal">"null</span>|string",
+    <span class="hljs-attr">"following_count"</span>: integer,
+    <span class="hljs-attr">"follower_count"</span>: integer,
+    <span class="hljs-attr">"is_follow"</span>: boolean,
+    <span class="hljs-attr">"is_verify"</span>: boolean
+  }
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get information about a specific user by their username.</li>
+</ul>
+<h3 id="follow-user">Follow User</h3>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>Endpoints:</strong> /accounts/follow/&lt;username&gt;/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;username&gt;</code>: The username of the user to follow.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"You have followed/unfollow &lt;username&gt;." (depending on action)</span> 
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Follow a user.</li>
+</ul>
+<h3 id="change-password">Change Password</h3>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>Endpoints:</strong> /accounts/password/change/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Request Body (JSON):</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"old_password"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"new_password"</span>: <span class="hljs-string">"string"</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"string"</span>  // Success message
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Change the password for the currently logged-in user.</li>
+</ul>
+<h3 id="update-profile">Update Profile</h3>
+<ul>
+<li><strong>Method:</strong> PUT</li>
+<li><strong>Endpoints:</strong> /accounts/profile/update/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Request Body (multipart/form-data):</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"full_name"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"username"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"profile_image"</span>: file (optional)
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Update the profile information for the currently logged-in user.</li>
+</ul>
+{% endblock body %}

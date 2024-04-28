@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+
+{% block title %}Tags{% endblock title %}
+
+{% block body %}
+<h2 id="api-documentation-tags-app">Tags Application</h2>
+<p>This section describes the API endpoints for managing tags.</p>
+<p><strong>Base URL:</strong> http://127.0.0.1:8000/</p>
+<h3 id="get-posts-by-tag-name">Get Posts By Tag Name</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoint:</strong> /tags/posts/&lt;tag-name&gt;/</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;tag-name&gt;</code>: The name of the tag to retrieve information about.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"posts"</span>: [
+    # List of posts in tag name
+  ]
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get a list of posts in tag name.</li>
+</ul>
+{% endblock body %}

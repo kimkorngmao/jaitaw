@@ -1,0 +1,48 @@
+POST http://127.0.0.1:8000/accounts/register/
+Content-Type: application/json
+
+{ "full_name":"Preah Thong", "email":"preahthong@mail.com", "username":"preahthong", "password":"12345678" }
+
+###
+POST http://127.0.0.1:8000/accounts/login/
+Content-Type: application/json
+
+{ "username":"preahthong", "password":"12345678" }
+
+###
+GET http://127.0.0.1:8000/accounts/me/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+###
+GET http://127.0.0.1:8000/accounts/follower/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+###
+GET http://127.0.0.1:8000/accounts/following/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+###
+GET http://127.0.0.1:8000/accounts/<username>/
+Content-Type: application/json
+
+###
+POST http://127.0.0.1:8000/accounts/follow/<username>/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+###
+POST http://127.0.0.1:8000/accounts/password/change/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+{"old_password": "12345678", "new_password": "thongloveneak"}
+
+###
+PUT http://127.0.0.1:8000/accounts/profile/update/
+Content-Type: multipart/form-data
+Authorization: Bearer <access_token>
+
+{ "full_name":"New Name", "email":"myname@mail.com", "username":"newname", "profile_image": "file"}

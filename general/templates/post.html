@@ -1,0 +1,242 @@
+{% extends "base/base.html" %}
+
+{% block title %}Posts{% endblock title %}
+
+{% block body %}
+<h2 id="api-documentation-posts-management-continued">Posts Application</h2>
+<p>This section describes the API endpoints for managing posts.</p>
+<p><strong>Base URL:</strong> http://127.0.0.1:8000/</p>
+<p><strong>Authentication:</strong></p>
+<p>Most API calls require authorization with a valid access token. You can obtain an access token by logging in with a username and password (refer to Accounts section).</p>
+
+
+<h3 id="retrieve-all-post">Retrieve all Posts List (paginated)</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoints:</strong> /posts/</li>
+<li><strong>Parameters:</strong></li>
+<ul>
+<li><code>page</code> (integer, optional): The page number to retrieve. Defaults to 1. <br> For example, <code>/posts/?page=2</code> retrieves the second page of results.</li>
+<li><code>size</code> (integer, optional): The number of posts to return per page. Defaults to a value set by the <code>PageNumberPagination</code> class (typically 10). <br> For example, <code>/posts/?size=25</code> returns 25 posts per page.</li>
+</ul>
+</ul>
+<ul>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"count"</span>: integer,
+  <span class="hljs-attr">"next"</span>: <span class="hljs-string">"null|string"</span>,          # Added for pagination links (if applicable)
+  <span class="hljs-attr">"previous"</span>: <span class="hljs-string">"null|string"</span>,  # Added for pagination links (if applicable)
+  <span class="hljs-attr">"posts"</span>: [
+    # List of posts
+  ]
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Retrieves a paginated list of all public posts. You can optionally filter the results using query parameters.</li>
+</ul>
+
+
+
+<h3 id="create-post">Create Post</h3>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>Endpoints:</strong> /posts/create/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Request Body:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"title"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"content"</span>: <span class="hljs-string">"string"</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"created_post"</span>: {
+    "code": "string",
+    "target": "string",
+    "title": "string",
+    "content": "string",
+    "author": {
+      "full_name": "string",
+      "username": "string",
+      "bio": "null|string",
+      "profile_image": "null|string",
+      "following_count": integer,
+      "follower_count": integer,
+      "is_follow": boolean,
+      "is_verify": boolean
+    },
+    "created": "string (date-time)",
+    "updated": "null|string (date-time)",
+    "like_count": integer,
+    "is_like": boolean,
+    "is_save": boolean,
+    "status": "string",
+    "views": integer,
+    "comment_count": integer
+    }
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Create a new post.</li>
+</ul>
+<h3 id="update-post">Update Post</h3>
+<ul>
+<li><strong>Method:</strong> PUT</li>
+<li><strong>Endpoints:</strong> /posts/update/&lt;code&gt;/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;code</code>&gt;: The unique code of the post to update.</li>
+</ul>
+</li>
+<li><strong>Request Body:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"title"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"content"</span>: <span class="hljs-string">"string"</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Post updated successfully"</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Update an existing post. Only the provided fields in the request body will be updated.</li>
+</ul>
+<h3 id="delete-post">Delete Post</h3>
+<ul>
+<li><strong>Method:</strong> DELETE</li>
+<li><strong>Endpoints:</strong> /posts/delete/&lt;code&gt;/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;code</code>&gt;: The unique code of the post to delete.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Post deleted successfully"</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Delete a post.</li>
+</ul>
+<h3 id="save-post">Save Post</h3>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>Endpoints:</strong> /posts/save/&lt;code&gt;/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;code</code>&gt;: The unique code of the post to save/unsave.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"You are now save/unsave &lt;post_title&gt;."</span> (depending on action)
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Save or unsave a post. Saving a post adds it to the current user's saved list.</li>
+</ul>
+<h3 id="like-post">Like Post</h3>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>Endpoints:</strong> /posts/like/&lt;code&gt;/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;code</code>&gt;: The unique code of the post to like/unlike.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"You are now like/unlike &lt;post_title&gt;."</span> (depending on action)
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Like or unlike a post. Liking a post increases the post's like count.</li>
+</ul>
+<h3 id="get-post-by-code">Get Post by Code</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoints:</strong> /posts/read/&lt;code&gt;/</li>
+<li><strong>Path Variable:</strong>
+<ul>
+<li><code>&lt;code</code>&gt;: The unique code of the post to retrieve.</li>
+</ul>
+</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"post"</span>: {
+    "code": "string",
+    "target": "/post/9Qejlp8IXpe",
+    "title": "string",
+    "content": "string",
+    "author": {
+      "full_name": "string",
+      "username": "string",
+      "bio": "null|string",
+      "profile_image": "null|string",
+      "following_count": integer,
+      "follower_count": integer,
+      "is_follow": boolean,
+      "is_verify": boolean
+    },
+    "created": "string (date-time)",
+    "updated": "null|string (date-time)",
+    "like_count": integer,
+    "is_like": boolean,
+    "is_save": boolean,
+    "status": "string",
+    "views": integer,
+    "comment_count": integer
+  }
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get information about a specific post by its unique code.</li>
+</ul>
+<h3 id="get-liked-posts">Get Liked Posts</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoints:</strong> /posts/liked/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"posts"</span>: [
+    # List of posts liked by the current user
+  ]
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get a list of posts liked by the currently logged-in user.</li>
+</ul>
+<h3 id="get-saved-posts">Get Saved Posts</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoints:</strong> /posts/saved/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"posts"</span>: [
+    # List of posts saved by the current user
+  ]
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get a list of posts saved by the currently logged-in user.</li>
+</ul>
+{% endblock body %}

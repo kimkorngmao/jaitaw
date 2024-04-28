@@ -1,0 +1,13 @@
+GET http://127.0.0.1:8000/notifications/inbox/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNDg1Mjc4LCJpYXQiOjE3MTM3MDkyNzgsImp0aSI6ImUxN2M5NGRjZjc4OTRjMjY5N2IwNjk5MGEyNzI2OTNkIiwidXNlcl9pZCI6MX0.nqPtnt1faAbzK_pNvYSuw8RyEw-AQV8O0bzWyhjyels
+
+###
+GET http://127.0.0.1:8000/notifications/badge/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+###
+PATCH http://127.0.0.1:8000/notifications/mark/all/
+Content-Type: application/json
+Authorization: Bearer <access_token>

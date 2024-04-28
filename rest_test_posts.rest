@@ -1,0 +1,51 @@
+GET http://127.0.0.1:8000/posts/?size=3&page=1
+Content-Type: application/json
+
+###
+POST http://127.0.0.1:8000/posts/create/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+{ "title":"Preah Thong and Neang Neak", "content":"The Preah Thong and Neang Neakii statue symbolises the birth of Khmer land, culture, traditions and civilisation of Cambodia."}
+
+
+###
+GET http://127.0.0.1:8000/posts/read/9Qejlp8IXpe/
+Content-Type: application/json
+
+###
+PUT http://127.0.0.1:8000/posts/update/9Qejlp8IXpe/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNDUwMTYzLCJpYXQiOjE3MTM2NzQxNjMsImp0aSI6ImQ3ZGJhNTZiNTQwNjQyNDc5NTMzYjUyODA5MDU2YTE3IiwidXNlcl9pZCI6Mn0.YV9s2UdB9-LvuVbB1PoTbC9fNmEACRuO2AC0KJQ3Tqk
+
+{ "title":"10 Easy Vegan Recipes for Busy Weeknights", "content":"Dive into a collection of quick and delicious vegan recipes perfect for hectic weeknights. From flavorful stir-fries to hearty soups, these plant-based meals will satisfy your hunger without keeping you chained to the kitchen. #VeganRecipes #QuickMeals #PlantBasedCooking"}
+
+###
+
+POST http://127.0.0.1:8000/posts/save/<code>/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+###
+
+POST http://127.0.0.1:8000/posts/like/<code>/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+
+###
+
+DELETE  http://127.0.0.1:8000/posts/delete/<code>/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+
+###
+GET http://127.0.0.1:8000/posts/liked/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+###
+GET http://127.0.0.1:8000/posts/saved/
+Content-Type: application/json
+Authorization: Bearer <access_token>

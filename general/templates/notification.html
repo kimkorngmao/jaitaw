@@ -1,0 +1,55 @@
+{% extends "base/base.html" %}
+
+{% block title %}Notification{% endblock title %}
+
+{% block body %}
+<h2 id="api-documentation-notifications-management">Notifications Application</h2>
+<p>This section describes the API endpoints for managing notifications.</p>
+<p><strong>Base URL:</strong> http://127.0.0.1:8000/</p>
+<p><strong>Authentication:</strong></p>
+<p>Most API calls require authorization with a valid access token. You can obtain an access token by logging in with a username and password (refer to Accounts section).</p>
+<h3 id="get-inbox-notifications">Get Inbox Notifications</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoints:</strong> /notifications/inbox/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"notifications"</span>: [
+    # List of notifications of the current user.
+  ]
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get a list of notifications for the currently logged-in user.</li>
+</ul>
+<h3 id="get-notification-badge-count">Get Notification Badge Count</h3>
+<ul>
+<li><strong>Method:</strong> GET</li>
+<li><strong>Endpoints:</strong> /notifications/badge/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"total_count"</span>: integer
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Get the total number of unread notifications for the currently logged-in user.</li>
+</ul>
+<h3 id="mark-all-notifications-as-read">Mark All Notifications as Read</h3>
+<ul>
+<li><strong>Method:</strong> PATCH</li>
+<li><strong>Endpoints:</strong> /notifications/mark/all/</li>
+<li><strong>Authorization:</strong> Bearer &lt;access_token&gt;</li>
+<li><strong>Response:</strong></li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"All notifications have been marked as read."</span>
+}
+</div></code></pre>
+<ul>
+<li><strong>Description:</strong> Mark all unread notifications for the currently logged-in user as read.</li>
+</ul>
+{% endblock body %}

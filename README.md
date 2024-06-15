@@ -73,6 +73,7 @@ This repository provides a mini Django REST Framework API for building a social 
 
    ```
    SECRET_KEY=your_secret_key
+   DEBUG=True
    ALLOWED_HOSTS=localhost,127.0.0.1  # Add additional allowed hosts if needed
    ```
 

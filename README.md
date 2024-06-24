@@ -60,7 +60,7 @@ This repository provides a mini Django REST Framework API for building a social 
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/maokimkorng/jaitaw.git
+   git clone https://github.com/kimkorngmao/jaitaw.git
    ```
 
 2. Navigate to the project directory:
